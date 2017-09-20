@@ -35,9 +35,10 @@ typedef struct token {
 
 VEC8_DEFINE(tokens, token_t, addrcmp);
 
-typedef OBSERVABLE(lexer,
+typedef struct {
+  observers_t observers;
   tokens_t tokens;
-) lexer_t;
+} lexer_t;
 
 typedef enum lex_event_code {
   LEX_ON_TOK_PUSH = 0,
