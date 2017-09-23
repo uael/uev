@@ -27,8 +27,6 @@
 
 #include "uev.h"
 
-#define addrcmp(a, b) i64cmp(&(a), &(b))
-
 typedef struct token {
   i8_t type;
 } token_t;
@@ -78,18 +76,16 @@ pp_update(pp_t *self, lexer_t *lexer, lex_event_code_t code, void *arg) {
   return RET_SUCCESS;
 }
 
-#define new(T, ...) ((T) {__VA_ARGS__})
-
 i32_t
 main(void) {
   lexer_t lex = {0};
 
-  lexer_attach(&lex, &new(pp_t, pp_update, pp_dtor));
-  lexer_notify(&lex, LEX_ON_TOK_PUSH, &new(token_t, 'H'));
-  lexer_notify(&lex, LEX_ON_TOK_PUSH, &new(token_t, 'e'));
-  lexer_notify(&lex, LEX_ON_TOK_PUSH, &new(token_t, 'l'));
-  lexer_notify(&lex, LEX_ON_TOK_PUSH, &new(token_t, 'l'));
-  lexer_notify(&lex, LEX_ON_TOK_PUSH, &new(token_t, 'o'));
+  lexer_attach(&lex, new (pp_t, pp_update, pp_dtor));
+  lexer_notify(&lex, LEX_ON_TOK_PUSH, new (token_t, 'H'));
+  lexer_notify(&lex, LEX_ON_TOK_PUSH, new (token_t, 'e'));
+  lexer_notify(&lex, LEX_ON_TOK_PUSH, new (token_t, 'l'));
+  lexer_notify(&lex, LEX_ON_TOK_PUSH, new (token_t, 'l'));
+  lexer_notify(&lex, LEX_ON_TOK_PUSH, new (token_t, 'o'));
   lexer_detach(&lex);
   return 0;
 }
