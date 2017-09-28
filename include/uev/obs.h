@@ -73,7 +73,7 @@ VEC16_DEFINE(observers, observer_t *, observer_cmp);
     } \
     return RET_SUCCESS; \
   } \
-  static FORCEINLINE ret_t \
+  static FORCEINLINE void \
   ID##_detach(TObservable *__restrict__ self) { \
     u16_t i; \
     for (i = 0; i < self->observers.len; ++i) { \
