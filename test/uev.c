@@ -31,7 +31,7 @@ typedef struct token {
   i8_t type;
 } token_t;
 
-VEC8_DEFINE(tokens, token_t, addrcmp);
+VEC8_DEFINE(tokens, token_t, addrcmp)
 
 typedef struct {
   observers_t observers;
@@ -43,13 +43,13 @@ typedef enum lex_event_code {
   LEX_ON_TOK_POP
 } lex_event_code_t;
 
-OBSERVABLE_DEFINE(lexer, lexer_t, lex_event_code_t);
+OBSERVABLE_DEFINE(lexer, lexer_t, lex_event_code_t)
 
 typedef struct macro {
   tokens_t tokens;
 } macro_t;
 
-STR_MAP_DEFINE(macros, macro_t, addrcmp);
+STR_MAP_DEFINE(macros, macro_t, addrcmp)
 
 typedef OBSERVER(pp, lexer_t, lex_event_code_t,
   macros_t macros;

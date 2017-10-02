@@ -40,11 +40,11 @@
     __VA_ARGS__ \
   }
 
-typedef OBSERVER(observer, void, i32_t) observer_t;
+typedef OBSERVER(observer, void, i32_t, void *dummy;) observer_t;
 
 #define observer_cmp(a, b) i64cmp(&(a), &(b))
 
-VEC16_DEFINE(observers, observer_t *, observer_cmp);
+VEC16_DEFINE(observers, observer_t *, observer_cmp)
 
 #define OBSERVABLE(NAME, ...) \
   struct NAME { \
