@@ -26,6 +26,21 @@ add_library(uev INTERFACE)
 target_include_directories(uev INTERFACE ${uev_INC_DIR})
 target_link_libraries(uev INTERFACE uds)
 
+set(CMAKE_C_FLAGS "")
+set(CMAKE_C_FLAGS_DEBUG "")
+set(CMAKE_C_FLAGS_RELEASE "")
+
+if (MSVC)
+  target_compile_options(uev
+    INTERFACE /MT$<$<CONFIG:Debug>:d> /Oy /Za
+    INTERFACE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
+else ()
+  target_compile_options(uev
+    INTERFACE -Wall -Werror -Wextra -fomit-frame-pointer
+    INTERFACE -Wno-missing-field-initializers
+    INTERFACE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>)
+endif ()
+
 get_directory_property(uev_PARENT PARENT_DIRECTORY)
 if (NOT ${uev_PARENT})
   set(uev_DEVEL TRUE)
