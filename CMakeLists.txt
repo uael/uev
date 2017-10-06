@@ -32,7 +32,8 @@ set(CMAKE_C_FLAGS_RELEASE "")
 
 if (MSVC)
   target_compile_options(uev
-    INTERFACE /MT$<$<CONFIG:Debug>:d> /Oy /Za
+    INTERFACE /MT$<$<CONFIG:Debug>:d> /Oy /Za /W3
+    INTERFACE /D_CRT_SECURE_NO_WARNINGS
     INTERFACE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
 else ()
   target_compile_options(uev
@@ -42,12 +43,12 @@ else ()
 endif ()
 
 get_directory_property(uev_PARENT PARENT_DIRECTORY)
-if (NOT ${uev_PARENT})
+if (NOT uev_PARENT)
   set(uev_DEVEL TRUE)
-elseif (NOT ${uev_DEVEL})
+elseif (NOT uev_DEVEL)
   set(uev_DEVEL FALSE)
 endif ()
-if (${uev_DEVEL} AND EXISTS ${uev_TEST_DIR})
+if (uev_DEVEL AND EXISTS ${uev_TEST_DIR})
   project_dependency(cute GIT_REPOSITORY https://github.com/uael/cute.git)
   if (NOT uev_PARENT)
     enable_testing()
@@ -56,10 +57,10 @@ if (${uev_DEVEL} AND EXISTS ${uev_TEST_DIR})
   file(GLOB uev_TEST_SRCS ${uev_TEST_SRCS} ${uev_TEST_DIR}/*.c)
   foreach (uev_TEST_SRC ${uev_TEST_SRCS})
     get_filename_component(uev_TEST_NAME ${uev_TEST_SRC} NAME_WE)
-    add_executable(test_${uev_TEST_NAME} ${uev_TEST_SRC})
-    add_dependencies(test_${uev_TEST_NAME} uev cute)
-    target_link_libraries(test_${uev_TEST_NAME} uev cute)
-    add_test(${uev_TEST_NAME} test_${uev_TEST_NAME})
+    add_executable(test_uev_${uev_TEST_NAME} ${uev_TEST_SRC})
+    add_dependencies(test_uev_${uev_TEST_NAME} uev cute)
+    target_link_libraries(test_uev_${uev_TEST_NAME} uev cute)
+    add_test(${uev_TEST_NAME} test_uev_${uev_TEST_NAME})
   endforeach ()
 endif ()
 

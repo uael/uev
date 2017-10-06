@@ -54,14 +54,14 @@ VEC16_DEFINE(observers, observer_t *, observer_cmp)
 
 #define OBSERVABLE_DEFINE(ID, TObservable, TCode) \
   static FORCEINLINE ret_t \
-  ID##_attach(TObservable *__restrict__ self, void *observer) { \
+  ID##_attach(TObservable *__restrict self, void *observer) { \
     return observers_push( \
       &self->observers, \
       (observer_t *) observer \
     ); \
   } \
   static FORCEINLINE ret_t \
-  ID##_notify(TObservable *__restrict__ self, TCode code, void *arg) { \
+  ID##_notify(TObservable *__restrict self, TCode code, void *arg) { \
     u16_t i; \
     ret_t ret; \
     for (i = 0; i < self->observers.len; ++i) { \
@@ -74,7 +74,7 @@ VEC16_DEFINE(observers, observer_t *, observer_cmp)
     return RET_SUCCESS; \
   } \
   static FORCEINLINE void \
-  ID##_detach(TObservable *__restrict__ self) { \
+  ID##_detach(TObservable *__restrict self) { \
     u16_t i; \
     for (i = 0; i < self->observers.len; ++i) { \
       if (self->observers.buf[i]->dtor) { \
